@@ -1,4 +1,6 @@
-const regPhoneNum = (num) => {
+// 휴대폰 번호가 유효한지 판별하는 함수를 만드시오.
+
+const checkAvailablePhoneNum = (num) => {
     num = num.split("-").join("");
   
     const checkAllNum = Number.isInteger(Number(num));
@@ -8,4 +10,4 @@ const regPhoneNum = (num) => {
     return checkAllNum && checkStartNum && checkNumLength ? true : false;
 }
 
-regPhoneNum("0101234567");
+checkAvailablePhoneNum("0101234567");
