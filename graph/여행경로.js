@@ -1,5 +1,4 @@
 // 프로그래머스 [여행경로]
-// 앗싸 이제 다른사람풀이 안보고도 내가 직접 풀수 있다
 const sortByAlphabet = (list) => {
   return list
     ? list.sort((a, b) => {
@@ -11,8 +10,8 @@ const sortByAlphabet = (list) => {
 };
 
 const solution = (tickets) => {
-  const queue = ["ICN"];
-  const visited = {};
+  tickets.sort();
+
   const adjacencyList = tickets.reduce((pre, [from, to]) => {
     pre[from] = (pre[from] || []).concat(to);
 
@@ -20,38 +19,49 @@ const solution = (tickets) => {
   }, {});
   const result = [];
 
-  while (queue.length) {
-    const current = queue.shift();
+  function dfs(departure) {
+    for (let children of adjacencyList[departure]) {
+      if (adjacencyList[departure]) {
+        adjacencyList[departure] = adjacencyList[departure].filter(
+          (v) => v !== children
+        );
+      }
+      if (adjacencyList[children]) {
+        adjacencyList[children] = adjacencyList[children].filter(
+          (v) => v !== departure
+        );
+      }
 
-    if (visited[current]) continue;
-    visited[current] = true;
+      if (result[result.length - 1] === departure) result.push(children);
+      else result.push(departure, children);
 
-    for (let children of sortByAlphabet(adjacencyList[current])) {
-      console.log({ children });
-      if (visited[children]) continue;
-
-      if (result[result.length - 1] === current) result.push(children);
-      else result.push(current, children);
+      if (adjacencyList[children]?.length) dfs(children);
     }
-
-    queue.unshift(...sortByAlphabet(adjacencyList[current]));
   }
+
+  dfs("ICN");
 
   return result;
 };
 
 console.log(
-  // solution([
-  //   ["ICN", "JFK"],
-  //   ["HND", "IAD"],
-  //   ["JFK", "HND"],
-  // ])
+  solution([
+    ["ICN", "JFK"],
+    ["HND", "IAD"],
+    ["JFK", "HND"],
+  ]),
   solution([
     ["ICN", "SFO"],
     ["ICN", "ATL"],
     ["SFO", "ATL"],
     ["ATL", "ICN"],
     ["ATL", "SFO"],
+  ]),
+  solution([
+    ["ICN", "COO"],
+    ["ICN", "BOO"],
+    ["COO", "ICN"],
+    ["BOO", "DOO"],
   ])
 );
 
