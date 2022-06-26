@@ -31,6 +31,14 @@ const Direction = [
 ];
 
 const isAvailableRange = (col, row, box, Col, Row, Box) => {
+  console.log("isAvailableRange", {
+    "col >= 0 ": col >= 0,
+    "row >= 0 ": row >= 0,
+    "box >= 0 ": box >= 0,
+    "col < Col ": col < Col,
+    "row < Row ": row < Row,
+    "box < Box": box < Box,
+  });
   return (
     col >= 0 && row >= 0 && box >= 0 && col < Col && row < Row && box < Box
   );
@@ -81,11 +89,12 @@ const solution = ({
       ];
 
       if (
-        !isAvailableRange(newCol, newRow, newBox, col, row, box) ||
+        !isAvailableRange(newCol, newRow, newBox, Col, Row, Box) ||
         visited[newBox][newRow][newCol] ||
         farm[newBox][newRow][newCol] !== 0
-      )
+      ) {
         continue;
+      }
 
       day[newBox][newRow][newCol] = day[box][row][col] + 1;
       leftTomato--;
@@ -97,6 +106,7 @@ const solution = ({
     }
   }
 
+  console.log({ farm, visited, day, queue, leftTomato });
   console.log(-1);
 };
 
