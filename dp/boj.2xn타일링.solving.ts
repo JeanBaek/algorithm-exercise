@@ -1,23 +1,20 @@
-// 백준 [9095] 1, 2, 3 더하기
+// 백준 [11726] 2xn 타일링
 const fs = require("fs");
+const filePath = "./BOJ.2xn타일링.input.txt"; // file path: process.platform === 'linux' ? '/dev/stdin' : 'input.txt';
+const input = fs.readFileSync(filePath).toString().trim().split("\n");
 
-const input = fs
-  .readFileSync("./input.txt") // file path: '/dev/stdin'
-  .toString()
-  .trim()
-  .split("\n");
+const solution = (column: number) => {
+  // 전형적인 피보나치 문제
+  const fibList = [1, 1];
 
-const solution = (n: number) => {
-  const sumList = [0, 1, 2, 4];
-
-  for (let i = 4; i <= n; i++) {
-    sumList.push(sumList[i - 3] + sumList[i - 2] + sumList[i - 1]);
+  for (let i = 2; i <= column; i++) {
+    fibList.push((fibList[i - 1] + fibList[i - 2]) % 10007);
   }
 
-  return sumList[n];
+  return fibList[column];
 };
 
-input.slice(1).forEach((n) => console.log(solution(+n)));
+console.log(solution(input));
 
 /* 아래 에러 우회를 위해 의미없는 export 추가
 

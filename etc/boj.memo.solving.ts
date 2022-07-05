@@ -1,23 +1,21 @@
-// 백준 [9095] 1, 2, 3 더하기
+// 백준 쉬운문제풀이 메모장으로 쓰는 파일
 const fs = require("fs");
+const filePath = "./boj.memo.input.txt"; // file path: process.platform === 'linux' ? '/dev/stdin' : 'input.txt';
+const input = fs.readFileSync(filePath).toString().trim().split("\n");
 
-const input = fs
-  .readFileSync("./input.txt") // file path: '/dev/stdin'
-  .toString()
-  .trim()
-  .split("\n");
+const solution = ([length, ...nums]: string[]) => {
+  let result = "";
 
-const solution = (n: number) => {
-  const sumList = [0, 1, 2, 4];
+  nums
+    .sort((a, b) => +a - +b)
+    .forEach(
+      (num, index) => (result += `${num}${index < +length - 1 ? "\n" : ""}`)
+    );
 
-  for (let i = 4; i <= n; i++) {
-    sumList.push(sumList[i - 3] + sumList[i - 2] + sumList[i - 1]);
-  }
-
-  return sumList[n];
+  return result;
 };
 
-input.slice(1).forEach((n) => console.log(solution(+n)));
+console.log(solution(input));
 
 /* 아래 에러 우회를 위해 의미없는 export 추가
 

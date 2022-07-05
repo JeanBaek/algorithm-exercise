@@ -1,35 +1,45 @@
 // 백준 [1260] DFS와 BFS
 // https://jun-choi-4928.medium.com/javascript%EB%A1%9C-%ED%8A%B8%EB%A6%AC-bfs-dfs-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0-e96bcdadd1f3 준이오빠 블로그인데 내용 좋음
 const fs = require("fs");
+const filePath = "./dfsAndBfs.input.txt"; // file path: process.platform === 'linux' ? '/dev/stdin' : 'input.txt';
+const input = fs.readFileSync(filePath).toString().trim().split("\n");
 
-const input = fs
-  .readFileSync("./dfsAndBfs.input.txt") // file path: '/dev/stdin'
-  .toString()
-  .trim()
-  .split("\n");
+type Input = {
+  nodeVolume: number;
+  edgeVolume: number;
+  startNode: number;
+  vertexList: number[][];
+};
 
-const parsingInput = ([info, ...naiveVertexList]) => {
-  const [nodeVolume, edgeVolume, startNode] = info.split(" ").map((el) => +el);
-  const vertexList = naiveVertexList.map((v) => v.split(" ").map((el) => +el));
+const parsingInput = ([info, ...naiveVertexList]: string[]): Input => {
+  const [nodeVolume, edgeVolume, startNode] = info.split(" ").map(Number);
+  const vertexList = naiveVertexList.map((v) => v.split(" ").map(Number));
 
   return { nodeVolume, edgeVolume, startNode, vertexList };
 };
 
-const solution = ({ nodeVolume, edgeVolume, startNode, vertexList }) => {
-  console.log(dfs(vertexList, startNode, nodeVolume));
-  console.log(bfs(vertexList, startNode, nodeVolume));
+const solution = ({ nodeVolume, edgeVolume, startNode, vertexList }: Input) => {
+  console.log(dfs({ vertexList, startNode, nodeVolume }).join(" "));
+  console.log(bfs({ vertexList, startNode, nodeVolume }).join(" "));
 };
 
-const dfs = (vertexList, startNode, nodeVolume) => {
+const dfs = ({
+  vertexList,
+  startNode,
+  nodeVolume,
+}: Omit<Input, "edgeVolume">) => {
   const queue = [startNode];
-  const visited = new Array(nodeVolume + 1).fill(false);
-  const adjacencyList = vertexList.reduce((pre, [from, to]) => {
-    pre[from] = (pre[from] || []).concat(to);
-    pre[to] = (pre[to] || []).concat(from);
+  const visited: boolean[] = new Array(nodeVolume + 1).fill(false);
+  const adjacencyList: { [key: string]: number[] } = vertexList.reduce(
+    (pre: { [key: string]: number[] }, [from, to]) => {
+      pre[from] = (pre[from] || []).concat(to);
+      pre[to] = (pre[to] || []).concat(from);
 
-    return pre;
-  }, {});
-  const result = [];
+      return pre;
+    },
+    {}
+  );
+  const result: number[] = [];
 
   while (queue.length) {
     const current = queue.shift();
@@ -37,22 +47,29 @@ const dfs = (vertexList, startNode, nodeVolume) => {
 
     result.push(current);
     visited[current] = true;
-    queue.unshift(...adjacencyList[current].sort((a, b) => a - b)); // 여기만 bfs랑 다름
+    queue.unshift(...(adjacencyList[current] || []).sort((a, b) => a - b)); // 여기만 bfs랑 다름
   }
 
   return result;
 };
 
-const bfs = (vertexList, startNode, nodeVolume) => {
+const bfs = ({
+  vertexList,
+  startNode,
+  nodeVolume,
+}: Omit<Input, "edgeVolume">) => {
   const queue = [startNode];
-  const visited = new Array(nodeVolume + 1).fill(false);
-  const adjacencyList = vertexList.reduce((pre, [from, to]) => {
-    pre[from] = (pre[from] || []).concat(to);
-    pre[to] = (pre[to] || []).concat(from);
+  const visited: boolean[] = new Array(nodeVolume + 1).fill(false);
+  const adjacencyList: { [key: string]: number[] } = vertexList.reduce(
+    (pre: { [key: string]: number[] }, [from, to]) => {
+      pre[from] = (pre[from] || []).concat(to);
+      pre[to] = (pre[to] || []).concat(from);
 
-    return pre;
-  }, {});
-  const result = [];
+      return pre;
+    },
+    {}
+  );
+  const result: number[] = [];
 
   while (queue.length) {
     const current = queue.shift();
@@ -60,7 +77,7 @@ const bfs = (vertexList, startNode, nodeVolume) => {
 
     result.push(current);
     visited[current] = true;
-    queue.push(...adjacencyList[current].sort((a, b) => a - b)); // 여기만 dfs랑 다름
+    queue.push(...(adjacencyList[current] || []).sort((a, b) => a - b)); // 여기만 dfs랑 다름
   }
 
   return result;
