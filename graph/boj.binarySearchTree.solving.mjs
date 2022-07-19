@@ -72,6 +72,4 @@ const solution = (preOrder) => {
   postOrder(tree.root());
 };
 
-console.time();
 solution(input);
-console.timeEnd();
