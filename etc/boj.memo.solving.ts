@@ -3,37 +3,25 @@ const fs = require("fs");
 const filePath = "./boj.memo.input.txt"; // file path: process.platform === 'linux' ? '/dev/stdin' : 'input.txt';
 const input = fs.readFileSync(filePath).toString().trim().split("\n");
 
-const solution = ([meta, ...map]: string[]) => {
-  const [h, w, block] = meta.split(" ");
-  const count: { [key: string]: number } = {};
-  const heights: number[] = [];
-  const answers: { t: number; h: number }[] = [];
+const solution = ([meta, ...data]: string[]) => {
+  const [height, width] = meta.split(" ");
+  const map = data.map((d) => d.split(""));
+  const col: boolean[] = new Array(+height).fill(false);
+  const row: boolean[] = new Array(+width).fill(false);
 
-  map.forEach((d) =>
-    d.split(" ").forEach((n) => (count[n] = (count[n] || 0) + 1))
-  );
-  heights.push(...Object.keys(count).map(Number));
+  for (let h = 0; h < +height; h++) {
+    for (let w = 0; w < +width; w++) {
+      if (map[h][w] === ".") continue;
 
-  for (let curH = Math.min(...heights); curH <= Math.max(...heights); curH++) {
-    let cutB = 0;
-    let addB = 0;
-
-    heights.forEach((g) => {
-      const n = g - curH;
-
-      if (n > 0) cutB += n * count[g];
-      else if (n < 0) addB += -n * count[g];
-    });
-
-    if (+block + cutB >= addB) answers.push({ t: cutB * 2 + addB, h: curH });
+      col[h] = true;
+      row[w] = true;
+    }
   }
 
-  const minT = Math.min(...answers.map(({ t }) => t));
-  const result = answers
-    .filter(({ t }) => t === minT)
-    .sort((a, b) => b.h - a.h)[0];
-
-  return `${result.t} ${result.h}`;
+  return Math.max(
+    col.reduce((p, b) => (p += +!b), 0),
+    row.reduce((p, b) => (p += +!b), 0)
+  );
 };
 
 console.log(solution(input));
