@@ -3,117 +3,105 @@ const fs = require("fs");
 const filePath = "./boj.dualPriorityQueue.input.txt"; // file path: process.platform === 'linux' ? '/dev/stdin' : 'input.txt';
 const input = fs.readFileSync(filePath).toString().trim().split("\n");
 
-class PQueue {
-  q: number[] = [0];
+class DualQueue {
+  heap: number[];
+  compare: (p: number, c: number) => boolean;
+
+  constructor(compare: (p: number, c: number) => boolean) {
+    this.heap = [0];
+    this.compare = compare;
+  }
+
+  /**** Default functions ****/
 
   enqueue(n: number) {
-    this.q.push(n);
+    this.heap.push(n);
 
-    let c = this.q.length - 1;
+    if (n === 97 && this.compare(2, 1)) console.log("I 97 1", this.heap, n);
+
+    this.heapifyUp();
+    if (n === 97 && this.compare(2, 1)) console.log("I 97 2", this.heap, n);
+  }
+
+  dequeue() {
+    if (this.empty()) return;
+
+    const deleteValue = this.heap[1];
+
+    this.heap[1] = this.heap[this.heap.length - 1];
+    this.heap.pop();
+
+    if (this.length() > 3) this.heapifyDown();
+
+    return deleteValue;
+  }
+
+  heapifyUp() {
+    // child, parent
+    let c = this.heap.length - 1;
     let p = Math.floor(c / 2);
-    let temp = 0;
+
+    let cItem = this.heap[c];
+    let pItem = this.heap[p];
 
     // O(n logn)
-    while (c > 1 && this.q[c] > this.q[p]) {
-      temp = this.q[p];
-      this.q[p] = this.q[c];
-      this.q[c] = temp;
+    while (c > 1 && this.compare(cItem, pItem)) {
+      // shift up
+      this.heap[c] = pItem;
+      this.heap[p] = cItem;
 
-      c = p;
+      // 기준 데이터 업데이트
+      c = p; // 2
       p = Math.floor(c / 2);
+
+      cItem = this.heap[c];
+      pItem = this.heap[p];
     }
   }
 
-  dequeue(code: "MAX" | "MIN") {
-    if (this.length() < 2) return;
-
-    if (code === "MAX") this.deleteMax();
-    else this.deleteMin();
-  }
-
-  deleteMax() {
-    this.q[1] = this.q[this.length() - 1];
-    this.q.pop();
-
-    this.heapify();
-  }
-
-  deleteMin() {
-    //1. for문을 돌면서 2^i 와 2^i+1 사이에 this.length가 있으면 break;
-    //2. break 상태의 2^i부터 마지막까지 for loop을 돌면서 가장 작은 요소가 있는 index 기억
-    //3. 해당 index에 = this.q[this.length() - 1] 재할당
-    //4. this.q.pop();
-    //5. this.heapify();
-
-    this.q[this.minIdx()] = this.q[this.length() - 1];
-    this.q.pop();
-    this.heapify();
-  }
-
-  heapify() {
+  heapifyDown() {
+    // parent, leftChild, rightChild
     let p = 1;
     let lc = p * 2;
     let rc = p * 2 + 1;
-    let max = () => {
-      if (this.length() <= rc || this.q[lc] > this.q[rc]) return lc;
 
-      return rc;
-    };
+    let pItem = this.heap[p];
+    let lcItem = this.heap[lc];
+    let rcItem = this.heap[rc];
 
-    let maxC = 0;
-    let temp = 0;
+    let targetC = this.compare(rcItem, lcItem) ? rc : lc;
+    let targetCItem = this.heap[targetC];
 
-    // O(n logn)
-    while (this.q[p] < this.q[lc] || this.q[p] < this.q[rc]) {
-      maxC = max();
-      temp = this.q[p];
-      this.q[p] = this.q[maxC];
-      this.q[maxC] = temp;
+    while (lc < this.length() && this.compare(targetCItem, pItem)) {
+      // shift down
+      this.heap[p] = targetCItem;
 
-      p = maxC;
+      // 기준 데이터 업데이트
+      p = targetC;
       lc = p * 2;
       rc = p * 2 + 1;
+
+      pItem = this.heap[p];
+      lcItem = this.heap[lc];
+      rcItem = this.heap[rc];
+
+      targetC = this.compare(rcItem, lcItem) ? rc : lc;
+      targetCItem = this.heap[targetC];
     }
   }
 
-  max() {
-    return this.q[1];
+  /**** Helper functions ****/
+
+  top() {
+    return this.heap[1];
   }
 
-  min() {
-    return this.q[this.minIdx()];
-  }
-
-  minIdx() {
-    // let i = 1;
-    // // O(n logn)
-    // for (i = 1; i <= Math.sqrt(this.length()); ) {
-    //   if (2 ** i > this.length()) break;
-    //   if (2 ** i <= this.length() && this.length() <= 2 ** (i + 1)) break;
-
-    //   i++;
-    // }
-
-    // let min = 1;
-    // // O(n)
-    // for (let j = 2 ** i; j < this.length(); j++) {
-    //   if (this.q[min] > this.q[j]) min = j;
-    // }
-
-    // return min;
-
-    const len = this.length();
-    let min = 1;
-    // O(n)
-    for (let i = len - Math.ceil(Math.sqrt(len / 2)); i < len; i++) {
-      if (this.q[min] > this.q[i]) min = i;
-    }
-
-    return min;
+  empty() {
+    return this.length() < 2;
   }
 
   length() {
-    return this.q.length;
+    return this.heap.length;
   }
 }
 
@@ -123,20 +111,56 @@ const solving = ([count, ...data]: string[]) => {
   // O(n^3) loop ^ 2 + split
   for (let i = 0; i < +count; i++) {
     const [len, ...orders] = data;
-    const queue = new PQueue();
+    const maxHeap = new DualQueue((p, c) => p > c);
+    const minHeap = new DualQueue((p, c) => p < c);
+    const valid = {};
 
     for (let j = 0; j < +len; j++) {
       const [code, n] = orders[j].split(" ");
+      console.log({
+        "[code, n]": [code, n],
+        maxHeap: maxHeap.heap,
+        minHeap: minHeap.heap,
+        valid,
+      });
 
-      if (code === "I") queue.enqueue(+n);
-      else {
-        if (+n > 0) queue.dequeue("MAX");
-        else queue.dequeue("MIN");
+      if (code === "I") {
+        maxHeap.enqueue(+n);
+        minHeap.enqueue(+n);
+
+        valid[n] = (valid[n] || 0) + 1;
+      } else {
+        if (+n > 0) {
+          while (!maxHeap.empty()) {
+            const value = maxHeap.dequeue();
+            console.log("maxHeap v", value);
+
+            if (valid[value]) {
+              valid[value]--;
+              break;
+            }
+          }
+        } else {
+          while (!minHeap.empty()) {
+            const value = minHeap.dequeue();
+            console.log("minHeap v", value);
+
+            if (valid[value]) {
+              valid[value]--;
+              break;
+            }
+          }
+        }
       }
     }
 
-    if (queue.length() < 2) result.push("EMPTY");
-    else result.push(`${queue.max()} ${queue.min()}`);
+    while (!maxHeap.empty() && !valid[maxHeap.top()]) maxHeap.dequeue();
+
+    while (!minHeap.empty() && !valid[minHeap.top()]) minHeap.dequeue();
+    console.log({ maxHeap: maxHeap.heap, minHeap: minHeap.heap });
+
+    if (maxHeap.empty() && minHeap.empty()) result.push("EMPTY");
+    else result.push(`${maxHeap.top()} ${minHeap.top()}`);
 
     data = orders.slice(+len);
   }
