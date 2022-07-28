@@ -1,25 +1,23 @@
 // 백준 쉬운문제풀이 메모장으로 쓰는 파일
 const fs = require("fs");
-const filePath = "./boj.memo.input.txt"; // file path: process.platform === 'linux' ? '/dev/stdin' : 'input.txt';
+const filePath = "./boj.좌표압축.input.txt"; // file path: process.platform === 'linux' ? '/dev/stdin' : 'input.txt';
 const input = fs.readFileSync(filePath).toString().trim().split("\n");
 
-const selectionSort = ([len, ...list]: number[]) => {
-  for (let i = 0; i < len; i++) {
-    let indexMin = i;
+const solution = ([len, data]: string[]) => {
+  const nums = data.split(" ").map(Number);
+  const compressedNums: { [key: string]: number } = Array.from(
+    new Set([...nums])
+  )
+    .sort((a, b) => a - b)
+    .reduce((obj, n, i) => {
+      obj[n] = i;
+      return obj;
+    }, {});
 
-    for (let j = i + 1; j < len; j++) {
-      if (list[j] < list[indexMin]) indexMin = j;
-    }
-
-    const temp = list[i];
-    list[i] = list[indexMin];
-    list[indexMin] = temp;
-  }
-
-  return list.join("\n");
+  return nums.map((n) => compressedNums[n]).join(" ");
 };
 
-console.log(selectionSort(input.map(Number)));
+console.log(solution(input));
 
 /* 아래 에러 우회를 위해 의미없는 export 추가
 

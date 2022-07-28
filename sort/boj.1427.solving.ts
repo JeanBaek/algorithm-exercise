@@ -1,25 +1,25 @@
 // 백준 쉬운문제풀이 메모장으로 쓰는 파일
 const fs = require("fs");
-const filePath = "./boj.memo.input.txt"; // file path: process.platform === 'linux' ? '/dev/stdin' : 'input.txt';
-const input = fs.readFileSync(filePath).toString().trim().split("\n");
+const filePath = "./boj.1427.input.txt"; // file path: process.platform === 'linux' ? '/dev/stdin' : 'input.txt';
+const input = fs.readFileSync(filePath).toString().trim();
 
-const selectionSort = ([len, ...list]: number[]) => {
-  for (let i = 0; i < len; i++) {
-    let indexMin = i;
+const insertionSort = (list: number[]) => {
+  for (let i = 1; i < list.length; i++) {
+    let j = i - 1;
+    const key = list[i];
 
-    for (let j = i + 1; j < len; j++) {
-      if (list[j] < list[indexMin]) indexMin = j;
+    while (list[j] < key && j >= 0) {
+      list[j + 1] = list[j];
+      j = j - 1;
     }
 
-    const temp = list[i];
-    list[i] = list[indexMin];
-    list[indexMin] = temp;
+    list[j + 1] = key;
   }
 
-  return list.join("\n");
+  return list.join("");
 };
 
-console.log(selectionSort(input.map(Number)));
+console.log(insertionSort(input.split("").map(Number)));
 
 /* 아래 에러 우회를 위해 의미없는 export 추가
 
