@@ -1,10 +1,9 @@
-// 백준 쉬운문제풀이 메모장으로 쓰는 파일
 const fs = require("fs");
-const filePath = "./boj.memo.input.txt"; // file path: process.platform === 'linux' ? '/dev/stdin' : 'input.txt';
+const filePath = "./boj.2751.input.txt"; // file path: process.platform === 'linux' ? '/dev/stdin' : 'input.txt';
 const input = fs.readFileSync(filePath).toString().trim().split("\n");
 
 const merge = (left: number[], right: number[]) => {
-  const sortedList = [];
+  const sortedList: number[] = [];
   let leftIdx = 0;
   let rightIdx = 0;
 
@@ -22,9 +21,9 @@ const merge = (left: number[], right: number[]) => {
 };
 
 const mergeSort = (list: number[]) => {
-  if (len < 2) return list;
+  if (list.length < 2) return list;
 
-  const mid = Math.floor(len / 2);
+  const mid = Math.floor(list.length / 2);
   const left = list.slice(0, mid);
   const right = list.slice(mid);
 
@@ -32,7 +31,7 @@ const mergeSort = (list: number[]) => {
 };
 
 const [len, ...list] = input;
-console.log(mergeSort(list.map(Number)));
+console.log(mergeSort(list.map(Number)).join("\n"));
 
 /* 아래 에러 우회를 위해 의미없는 export 추가
 
