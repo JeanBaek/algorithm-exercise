@@ -1,21 +1,28 @@
-const fs = require("fs");
-const filePath = "./boj.1541.input.txt"; // file path: process.platform === 'linux' ? '/dev/stdin' : 'input.txt';
-const input = fs.readFileSync(filePath).toString().trim();
+// const fs = require("fs");
+// const filePath = "./boj.1541.input.txt"; // file path: process.platform === 'linux' ? '/dev/stdin' : 'input.txt';
+// const input = fs.readFileSync(filePath).toString().trim();
 
-const solving = (input: string) => {
-  const expressions = input.split("-");
-
+const solving = (input: string[]) => {
+  const expressions = input.join("").split("+");
+  console.log(expressions);
   return expressions.reduce((p, e, i) => {
-    const n = e.split("+").reduce((p, c) => (p += +c), 0);
+    const n = e.split("-").reduce((p, c, i) => {
+      if (!i) p += +c;
+      else p -= +c;
+
+      return p;
+    }, 0);
+
+    console.log({ p, n });
 
     if (!i) p += n;
-    else p -= n;
+    else p += n;
 
     return p;
   }, 0);
 };
 
-console.log(solving(input));
+console.log(solving(["5", "-", "3", "+", "1", "+", "2", "-", "4"]));
 
 /* 아래 에러 우회를 위해 의미없는 export 추가
 

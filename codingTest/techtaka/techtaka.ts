@@ -53,7 +53,8 @@ function printName() {
   name = "D"; // A
   return print;
 }
-name = "B";
+
+// name = "B"; // 주석해제한 채 문제 풀었음
 
 // ({name: 'A', fnc: printName}).fnc()();
 
@@ -81,7 +82,7 @@ const solution = function (no: string | null | undefined): boolean {
   const right = no.slice(0, 3);
   const left = no.slice(3);
 
-  return right === 010 && (left.length === 7 || left.length === 8)
+  return right === "010" && (left.length === 7 || left.length === 8)
     ? true
     : false;
 };
@@ -91,3 +92,5 @@ const solution = function (no: string | null | undefined): boolean {
 // 01012341231
 // 위의 양식은 사람이 봤을 땐 휴대폰번호지만, 컴퓨터가 봤을 땐 복합데이터이다. 이런 경우는 어떻게 처리할 것인가?
 // 일반 전화번호(02, 032 등) 유효성은 어떻게 처리할 것인가?
+
+export {};
