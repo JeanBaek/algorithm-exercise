@@ -1,4 +1,3 @@
-// 백준 쉬운문제풀이 메모장으로 쓰는 파일
 const fs = require("fs");
 const filePath = "./boj.1427.input.txt"; // file path: process.platform === 'linux' ? '/dev/stdin' : 'input.txt';
 const input = fs.readFileSync(filePath).toString().trim();
