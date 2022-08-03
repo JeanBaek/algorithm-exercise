@@ -3,36 +3,21 @@ const fs = require("fs");
 const filePath = "./boj.memo.input.txt"; // file path: process.platform === 'linux' ? '/dev/stdin' : 'input.txt';
 const input = fs.readFileSync(filePath).toString().trim().split("\n");
 
-const merge = (left: number[], right: number[]) => {
-  const sortedList = [];
-  let leftIdx = 0;
-  let rightIdx = 0;
+function solution(n: number) {
+  const primes: number[] = [];
 
-  while (leftIdx < left.length && rightIdx < right.length) {
-    if (left[leftIdx] < right[rightIdx]) {
-      sortedList.push(left[leftIdx]);
-      leftIdx++;
-    } else {
-      sortedList.push(right[rightIdx]);
-      rightIdx++;
+  for (let i = 1; i <= Math.sqrt(n); i++) {
+    if (n % i === 0) {
+      primes.push(i);
+
+      if (n / i !== i) primes.push(n / i);
     }
   }
 
-  return sortedList.concat(left.slice(leftIdx), right.slice(rightIdx));
-};
+  return [].reduce((p, n) => p + n, 0);
+}
 
-const mergeSort = (list: number[]) => {
-  if (len < 2) return list;
-
-  const mid = Math.floor(len / 2);
-  const left = list.slice(0, mid);
-  const right = list.slice(mid);
-
-  return merge(mergeSort(left), mergeSort(right));
-};
-
-const [len, ...list] = input;
-console.log(mergeSort(list.map(Number)));
+console.log(solution(+input[0]));
 
 /* 아래 에러 우회를 위해 의미없는 export 추가
 
