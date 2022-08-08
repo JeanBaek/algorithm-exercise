@@ -19,10 +19,13 @@ function solution(arr) {
   for (let c = 1; c < operLen; c++) {
     for (let i = 0; i < operLen - c; i++) {
       const j = c + i;
+      console.log({ c, i, j });
 
       for (let k = i; k < j; k++) {
         const maxCurrent = maxDP[i][j];
         const minCurrent = minDP[i][j];
+
+        console.log({ k, maxDP, minDP, maxCurrent, minCurrent });
 
         if (arr[k * 2 + 1] === "+") {
           maxDP[i][j] = Math.max(maxCurrent, maxDP[i][k] + maxDP[k + 1][j]);
@@ -37,3 +40,6 @@ function solution(arr) {
 
   return maxDP[0][operLen - 1];
 }
+
+const input = ["1", "-", "3", "+", "5", "-", "8"];
+console.log(solution(input));
