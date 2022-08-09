@@ -1,6 +1,6 @@
 function safelyGet(object, path) {
   return path.split(".").reduce((p, dir) => {
-    if (p === undefined) return undefined;
+    if (p === undefined) return p;
     else p = p[dir];
 
     return p;
@@ -10,9 +10,7 @@ function safelyGet(object, path) {
 function solution(input, path) {
   const result = safelyGet(JSON.parse(input), path);
 
-  if (result === undefined) {
-    return "undefined";
-  }
+  if (result === undefined) return `${result}`;
 
   return JSON.stringify(result);
 }

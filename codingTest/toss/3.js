@@ -3,6 +3,8 @@ function solution(paths) {
 
   paths.forEach((p) => {
     p.split("/").forEach((el) => {
+      if (!el) return;
+
       if (el === ".") {
         result.pop();
       } else if (el === "..") {
@@ -21,8 +23,8 @@ function solution(paths) {
   return `/${result.join("/")}`;
 }
 
-console.log(solution(["/foo", "bar", "baz/asdf"]));
+// console.log(solution(["/foo", "bar", "baz/asdf"]));
 
-console.log(solution(["/foo", "bar", "baz", "...", "/asdf"]));
+// console.log(solution(["/foo", "bar", "baz", "...", "/asdf"]));
 
 console.log(solution(["/foo", "bar", "baz/./asdf"]));

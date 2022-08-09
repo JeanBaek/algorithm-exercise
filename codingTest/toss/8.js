@@ -29,11 +29,11 @@ function solution(route, path) {
   return JSON.stringify(result);
 }
 
-const input = [
-  "/service/[serviceId]/deployment/[deploymentId]",
-  "/service/1/deployment/9",
-];
-
-// console.log(parse(...input));
-// console.log(parse("/about", "/"));
-console.log(parse("/about", "/about"));
+// console.log(
+//   parse(
+//     "/service/[serviceId]/deployment/[deploymentId]",
+//     "/service/1/deployment/9"
+//   )
+// );
+console.log(parse("/about", "/"));
+// console.log(parse("/about", "/about"));
