@@ -3,7 +3,7 @@
 2. https://app.codility.com/demo/results/trainingMMYBG8-HCN/
 **/
 
-function solution(N, A) {
+function solution(N: number, A: number[]) {
   let increasedNums = Array(N).fill(0);
   let maxNum = Number.MIN_SAFE_INTEGER;
   let maxCounter = Number.MIN_SAFE_INTEGER;
@@ -13,7 +13,7 @@ function solution(N, A) {
     else if (x === N + 1) setMaxCounter();
   });
 
-  function increase(x) {
+  function increase(x: number) {
     if (increasedNums[x] < maxCounter) increasedNums[x] = maxCounter;
 
     increasedNums[x]++;
