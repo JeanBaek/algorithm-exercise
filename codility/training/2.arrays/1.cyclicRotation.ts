@@ -4,7 +4,7 @@ function solution(A: number[], K: number) {
   if (A.length === 0) return A;
 
   for (let i = 0; i < K; i++) {
-    A.push(A.shift());
+    A.push(A.shift() as number);
   }
 
   return A;

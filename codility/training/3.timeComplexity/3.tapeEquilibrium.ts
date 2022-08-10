@@ -3,7 +3,7 @@
 2. https://app.codility.com/demo/results/trainingPWDGQB-UQP/
 **/
 
-function solution(A) {
+function solution(A: number[]) {
   // O(N) 가즈아~
   // 1. P가 1(idx)일 때를 첫 계산으로
   // 2. P < A.length 조건에서 iterate 하면서 왼쪽 + A[P] / 오른쪽 - A[P]

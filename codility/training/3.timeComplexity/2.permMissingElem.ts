@@ -5,7 +5,7 @@
 4. https://app.codility.com/demo/results/trainingDRMRJ8-BS6/
 **/
 
-function solution(A) {
+function solution(A: number[]) {
   let missingElement = 1;
 
   A.sort((a, b) => a - b).some((n, i, arr) => {

@@ -6,7 +6,7 @@ const radixSort = (originNums: typeof NUM_LIST) => {
   let nums = originNums;
 
   for (let i = 1; i <= maxDigit(originNums); i++) {
-    const containerArr = Array.from({ length: 10 }).map(() => []);
+    const containerArr: number[][] = Array.from({ length: 10 }).map(() => []);
 
     nums.forEach((n) => containerArr[numOfDigit(i, n)].push(n));
     nums = containerArr.flat(2);
