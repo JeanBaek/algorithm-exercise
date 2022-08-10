@@ -4,4 +4,4 @@
 
 처음에는 JavaScript로 풀다가, 중간부터 TypeScript로 풀고 있습니다.
 
-JavaScript로 최적화한 메모리 관리가 어려워서 효율성이 풀리지 않는 문제는 Python으로 해결합니다.
+메모리 관리가 어려운 JavaScript로 효율성이 풀리지 않는 문제는 Python으로 해결합니다.
