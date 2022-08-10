@@ -1,7 +1,7 @@
 #### 알고리즘 문제를 푼 파일을 모아둔 repository입니다.
-주로 백준 사이트를 이용하며, 가끔 프로그래머스와 LeetCode도 이용합니다.
 
-처음에는 JavaScript로 풀다가, 
-중간부터 백준 사이트에서 TypeScript를 지원하는 것을 알게 된 후 TypeScript로 풀고 있습니다.
+주로 백준 사이트를 이용하며, 프로그래머스 / LeetCode / Codility 도 이용합니다.
 
-효율성이 풀리지 않는 문제는 Python으로 해결합니다. (JS/TS가 유연한 대신 개발자가 직접 메모리를 조절하기 어려운 부분이 있기 때문에)
+처음에는 JavaScript로 풀다가, 중간부터 TypeScript로 풀고 있습니다.
+
+JavaScript로 최적화한 메모리 관리가 어려워서 효율성이 풀리지 않는 문제는 Python으로 해결합니다.
