@@ -3,7 +3,7 @@
 2. https://app.codility.com/demo/results/training8BSG4Q-TA3/
 **/
 
-// /** 첫번째 풀이
+/** 첫번째 풀이
 // S: string, P: number[](max length of 50000), Q: number[](max length of 50000)
 // e.g) S: "CAGCCTA", P: [2, 5, 0], Q: [4, 5, 6]
 
@@ -27,7 +27,7 @@ function solution(S: string, P: number[], Q: number[]) {
     return minFactors;
   }, []);
 }
-// **/
+**/
 
 // 두번째 풀이
 function solution(S: string, P: number[], Q: number[]) {
