@@ -28,4 +28,18 @@ async function trigger() {
   console.timeEnd("function");
 }
 
-trigger();
+// trigger();
+
+(async function () {
+  const promiseResult = await new Promise((resolve, reject) => {
+    setTimeout(() => resolve("Result"), 2000);
+  });
+
+  console.log(promiseResult);
+})();
+
+(function () {
+  new Promise((resolve, reject) => {
+    setTimeout(() => resolve("Result"), 2000);
+  }).then((promiseResult) => console.log(promiseResult));
+})();
