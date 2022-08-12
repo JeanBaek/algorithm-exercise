@@ -1,3 +1,5 @@
+// Test Result: https://app.codility.com/demo/results/trainingF9BJ23-PYF/
+
 function solution(A: number[]) {
   A.sort((a, b) => a - b);
   const len = A.length;
@@ -66,7 +68,7 @@ console.log(solution([-99, -98, -96, -95])); // -893760
 console.log(solution([0, 1, 2, 3])); // 6
 console.log(solution([-2, -1, 0, 1, 2])); // 4
 console.log(solution([-2, -1, 1, 10])); // 20
-console.log(solution([-2, -1, 1, 8, 9, 10])); //
-console.log(solution([-3, -2, -1, 9, 10]));
-console.log(solution([-4, -3, -2, -1, 10]));
-console.log(solution([-9, 0, 1, 2]));
+console.log(solution([-2, -1, 1, 8, 9, 10])); // 720
+console.log(solution([-3, -2, -1, 9, 10])); // 60
+console.log(solution([-4, -3, -2, -1, 10])); // 120
+console.log(solution([-9, 0, 1, 2])); // 0
