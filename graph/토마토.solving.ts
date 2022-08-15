@@ -1,4 +1,4 @@
-import { Queue } from "./util";
+import { Queue } from "../etc/Queue";
 
 // 백준 [7569] 토마토
 // Olympiad > 한국정보올림피아드 > 한국정보올림피아드시․도지역본선 > 지역본선 2013 > 초등부 3번
