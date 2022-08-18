@@ -7,17 +7,17 @@ let inputString = "";
 let currentLine = 0;
 
 process.stdin.on("data", function (inputStdin) {
-  inputString += inputStdin;
+	inputString += inputStdin;
 });
 
 process.stdin.on("end", function () {
-  inputString = inputString.split("\n");
+	inputString = inputString.split("\n");
 
-  main();
+	main();
 });
 
 function readLine() {
-  return inputString[currentLine++];
+	return inputString[currentLine++];
 }
 
 /*
@@ -27,18 +27,18 @@ function readLine() {
  */
 
 function miniMaxSum(arr) {
-  // Write your code here
-  arr.sort((a, b) => a - b);
-  const sum = arr.reduce((a, b) => a + b);
+	// Write your code here
+	arr.sort((a, b) => a - b);
+	const sum = arr.reduce((a, b) => a + b);
 
-  console.log(`${sum - arr[arr.length - 1]} ${sum - arr[0]}`);
+	console.log(`${sum - arr[arr.length - 1]} ${sum - arr[0]}`);
 }
 
 function main() {
-  const arr = readLine()
-    .replace(/\s+$/g, "")
-    .split(" ")
-    .map((arrTemp) => parseInt(arrTemp, 10));
+	const arr = readLine()
+		.replace(/\s+$/g, "")
+		.split(" ")
+		.map((arrTemp) => parseInt(arrTemp, 10));
 
-  miniMaxSum(arr);
+	miniMaxSum(arr);
 }
