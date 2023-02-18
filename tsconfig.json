@@ -1,9 +1,9 @@
 {
-  "compilerOptions": {
-    "isolatedModules": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "sourceMap": true,
-    "downlevelIteration": true
-  }
+	"compilerOptions": {
+		"isolatedModules": true,
+		"noImplicitAny": true,
+		"strictNullChecks": true,
+		"sourceMap": true,
+		"downlevelIteration": true
+	}
 }
