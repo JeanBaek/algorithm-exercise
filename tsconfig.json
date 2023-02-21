@@ -1,9 +1,14 @@
 {
 	"compilerOptions": {
+		"types": [
+			"node"
+		],
 		"isolatedModules": true,
 		"noImplicitAny": true,
 		"strictNullChecks": true,
 		"sourceMap": true,
-		"downlevelIteration": true
+		"downlevelIteration": true,
+		"target": "es5",
+		"module": "commonjs"
 	}
 }
