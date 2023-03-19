@@ -24,7 +24,7 @@ WordDictionary.prototype.addWord = function (word) {
         layer = layer.get(char).next;
     }
 
-    layer.set('$', 1) // why set $ ?
+    layer.set(';', 1);
 };
 
 /**
@@ -45,7 +45,7 @@ WordDictionary.prototype.search = function (word) {
         while (head = queue.shift()) {
             if (char === '.') {
                 for (let [key, node] of head) {
-                    if (key !== '$') queue.push(node.next); // $ means the end of trie
+                    if (key !== ';') queue.push(node.next); // ; means the end of trie
                 }
             } else {
                 if (head.has(char)) queue.push(head.get(char).next);
@@ -57,7 +57,7 @@ WordDictionary.prototype.search = function (word) {
 
     if (queue.length) {
         for (let nextMap of queue) {
-            if (nextMap.has('$')) return true;
+            if (nextMap.has(';')) return true;
         }
     }
 
