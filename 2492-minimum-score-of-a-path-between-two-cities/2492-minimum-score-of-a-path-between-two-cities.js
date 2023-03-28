@@ -11,35 +11,11 @@ const minScore = function (n, roads) {
 
     // 1. make tree
     const tree = roads.reduce((map, [a, b, dist], idx) => {
-        // 둘다 X
-        if (!map.has(a) && !map.has(b)) {
-            map.set(a, new Map([[b, dist]]));
-            map.set(b, new Map([[a, dist]]));
-        }
-        // O a, X b
-        else if (!map.has(b)) {
-            const aMap = map.get(a);
-            aMap.set(b, dist);
+        if (map.has(a)) map.get(a).set(b, dist);
+        else map.set(a, new Map([[b, dist]]));
 
-            map.set(b, new Map([[a, dist]]));
-        }
-
-        // X a, O b
-        else if (!map.has(a)) {
-            const bMap = map.get(b);
-            bMap.set(a, dist);
-
-            map.set(a, new Map([[b, dist]]));
-        }
-
-        // O a, O b
-        else {
-            const aMap = map.get(a);
-            const bMap = map.get(b);
-
-            aMap.set(b, dist);
-            bMap.set(a, dist);
-        }
+        if (map.has(b)) map.get(b).set(a, dist);
+        else map.set(b, new Map([[a, dist]]));
 
         return map;
     }, new Map())
