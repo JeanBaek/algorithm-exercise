@@ -17,7 +17,7 @@ const minScore = function (n, roads) {
             map.set(b, new Map([[a, dist]]));
         }
         // O a, X b
-        else if (map.has(a) && !map.has(b)) {
+        else if (!map.has(b)) {
             const aMap = map.get(a);
             aMap.set(b, dist);
 
@@ -25,7 +25,7 @@ const minScore = function (n, roads) {
         }
 
         // X a, O b
-        else if (!map.has(a) && map.has(b)) {
+        else if (!map.has(a)) {
             const bMap = map.get(b);
             bMap.set(a, dist);
 
@@ -33,7 +33,7 @@ const minScore = function (n, roads) {
         }
 
         // O a, O b
-        else if (map.has(a) && map.has(b)) {
+        else {
             const aMap = map.get(a);
             const bMap = map.get(b);
 
