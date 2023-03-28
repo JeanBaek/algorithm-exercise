@@ -20,22 +20,24 @@ const minScore = function (n, roads) {
         return map;
     }, new Map())
 
+    console.log({tree})
+
     // 2. update 최소경로 by searching 1부터 n까지의 경로
     let minimumDist = Number.MAX_SAFE_INTEGER;
-    const nextVisitQueue = [1];
+    const nextNodes = [1];
     const visited = new Set();
 
-    while (nextVisitQueue.length) {
-        const nextVisit = nextVisitQueue.shift()
-        const subMap = tree.get(nextVisit);
+    while (nextNodes.length) {
+        const node = nextNodes.shift()
+        const subMap = tree.get(node);
 
         if (!subMap) continue;
-        for (let [key, value] of subMap.entries()) {
-            if (visited.has(`${nextVisit} ${key}`) || visited.has(`${key} ${nextVisit}`)) continue;
+        for (let [subK, subV] of subMap.entries()) {
+            if (visited.has(`${node} ${subK}`) || visited.has(`${subK} ${node}`)) continue;
 
-            visited.add(`${nextVisit} ${key}`);
-            nextVisitQueue.push(key)
-            minimumDist = Math.min(minimumDist, value);
+            visited.add(`${node} ${subK}`);
+            minimumDist = Math.min(minimumDist, subV);
+            nextNodes.push(subK)
         }
 
     }
