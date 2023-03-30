@@ -4,6 +4,7 @@
  * @return {number}
  */
 
+// TODO: 다익스트라로 풀어보기
 const minScore = function (n, roads) {
     // 1. make tree
     // 2. 최소경로를 update by searching 1부터 n까지의 경로
@@ -27,17 +28,16 @@ const minScore = function (n, roads) {
 
     while (nextNodes.length) {
         const node = nextNodes.shift()
-        const subMap = tree.get(node);
+        const subTree = tree.get(node);
 
-        if (!subMap) continue;
-        for (let [subK, subV] of subMap.entries()) {
+        if (!subTree) continue;
+        for (let [subK, subV] of subTree.entries()) {
             if (visited.has(`${node} ${subK}`) || visited.has(`${subK} ${node}`)) continue;
 
-            visited.add(`${node} ${subK}`);
             minimumDist = Math.min(minimumDist, subV);
+            visited.add(`${node} ${subK}`);
             nextNodes.push(subK)
         }
-
     }
 
     // 3. return 최소경로
